@@ -35,7 +35,7 @@ public class MainRepository {
             return null;
         }
         EntityManager em = entityManagerFactory.getNativeEntityManagerFactory().createEntityManager();
-        String sql = "select * from "+ GeneralConstants.ledgerSchema+"."+c.getSimpleName().toLowerCase()+" s where ";
+        String sql = "select * from "+ GeneralConstants.ledgerSchema+"."+GeneralConstants.studyTable+" s where ";
         StringBuilder content = new StringBuilder();
         map.forEach((k,v)->{
             content.append("s.tags->> '"+k+"' = '"+v+"' and ");
