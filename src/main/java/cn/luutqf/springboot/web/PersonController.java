@@ -5,8 +5,11 @@ import cn.luutqf.springboot.entity.Name;
 import cn.luutqf.springboot.entity.Person;
 import cn.luutqf.springboot.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +25,9 @@ public class PersonController {
 
     @Autowired
     private PersonRepository repository;
+
+    @Autowired
+    private LocalContainerEntityManagerFactoryBean entityManagerFactory;
 
     @GetMapping
     public Object test01(@RequestParam(defaultValue = "12344") String key,@RequestParam(defaultValue = "asdfasd")String value){
@@ -60,5 +66,14 @@ public class PersonController {
     @DeleteMapping
     public Object test04(){
         return null;
+    }
+
+    @GetMapping("test")
+    public Object test05(){
+        EntityManager em = entityManagerFactory.getNativeEntityManagerFactory().createEntityManager();
+        String sql = "select * from luutqf.person b where b.tags ->>'12344'= 'asdfasd'";
+        Query query = em.createNativeQuery(sql, Person.class);
+        List resultList = query.getResultList();
+        return resultList;
     }
 }

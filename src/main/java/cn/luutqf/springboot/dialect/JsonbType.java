@@ -29,7 +29,6 @@ import java.util.Properties;
 public class JsonbType implements UserType, ParameterizedType {
 
     private final ObjectMapper mapper = new ObjectMapper();
-    ;
 
     private static final ClassLoaderService classLoaderService = new ClassLoaderServiceImpl();
 
